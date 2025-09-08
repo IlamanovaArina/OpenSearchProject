@@ -3,6 +3,9 @@ import logging
 import time
 
 from opensearchpy import OpenSearch
+from dotenv import load_dotenv
+
+load_dotenv(override=True)
 
 
 logging.basicConfig(
@@ -15,15 +18,10 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-# ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
-# HOST = os.getenv("HOST")
-# PORT = os.getenv("PORT")
-# INDEX = os.getenv("INDEX")
-
-HOST = "opensearch"
-PORT = 9200
-INDEX = "my_index"
-ADMIN_PASSWORD = "ArinA_ArinA1"
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
+HOST = os.getenv("HOST")
+PORT = os.getenv("PORT")
+INDEX = os.getenv("INDEX")
 
 
 def create_opensearch_client():
@@ -31,21 +29,23 @@ def create_opensearch_client():
 
     Поддерживается базовая HTTP-аутентификация (user/password).
     """
-    client = OpenSearch(
-        hosts=[{"host": "opensearch", "port": 9200, "scheme": "https"}],
-        http_auth=("admin", "ADMIN_PASSWORD"),
-        use_ssl=True,
-        verify_certs=False,     # только для локальной отладки
-        ssl_show_warn=False,
-        timeout=30
-    )
-
     # client = OpenSearch(
-    #     hosts=[{"host": "opensearch", "port": 9200, "scheme": "http"}],
-    #     http_auth=None,  # если нет auth
-    #     use_ssl=False,
+    #     hosts=[{"host": "opensearch", "port": 9200, "scheme": "https"}],
+    #     http_auth=("admin", "ADMIN_PASSWORD"),
+    #     use_ssl=True,
+    #     verify_certs=False,     # только для локальной отладки
+    #     ssl_show_warn=False,
     #     timeout=30
     # )
+    print(ADMIN_PASSWORD, HOST, PORT, INDEX)
+
+
+    client = OpenSearch(
+        hosts=[{"host": "opensearch", "port": 9200, "scheme": "http"}],
+        http_auth=None,  # если нет auth
+        use_ssl=False,
+        timeout=30
+    )
     logger.info("Клиент создан")
     return client
 

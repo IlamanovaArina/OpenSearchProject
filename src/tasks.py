@@ -1,8 +1,8 @@
 import logging
+import os
+from dotenv import load_dotenv
 
-# Настройка логирования
-# logging.basicConfig(level=logging.INFO)
-# logger = logging.getLogger(__name__)
+load_dotenv(override=True)
 
 logging.basicConfig(
     filename='app.log',               # путь к файлу
@@ -13,11 +13,11 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Параметры подключения — замените пароль на настоящий
-HOST = "opensearch"
-PORT = 9200
-INDEX = "my_index"
-ADMIN_PASSWORD = "ArinA_ArinA1"
+
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
+HOST = os.getenv("HOST")
+PORT = os.getenv("PORT")
+INDEX = os.getenv("INDEX")
 
 
 def create_index(client):
@@ -47,7 +47,7 @@ def create_index(client):
             }
         }
     }
-
+    print(ADMIN_PASSWORD, HOST, PORT, INDEX)
     # indices.create возвращает ответ сервера — здесь мы игнорируем статус 400 (уже существует).
     client.indices.create(index=INDEX, body=body, ignore=400)
     logger.info("Index '%s' created (or already exists).", INDEX)
