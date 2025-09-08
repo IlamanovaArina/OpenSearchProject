@@ -7,16 +7,14 @@ from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
-
 logging.basicConfig(
-    filename='app.log',               # путь к файлу
+    filename='app.log',  # путь к файлу
     level=logging.INFO,
     format='%(asctime)s %(name)s %(levelname)s: %(message)s',
-    filemode='a',                     # 'a' — добавлять, 'w' — перезаписывать
+    filemode='a',  # 'a' — добавлять, 'w' — перезаписывать
     encoding='utf-8'
 )
 logger = logging.getLogger(__name__)
-
 
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
 HOST = os.getenv("HOST")
@@ -39,7 +37,6 @@ def create_opensearch_client():
     # )
     print(ADMIN_PASSWORD, HOST, PORT, INDEX)
 
-
     client = OpenSearch(
         hosts=[{"host": "opensearch", "port": 9200, "scheme": "http"}],
         http_auth=None,  # если нет auth
@@ -48,6 +45,7 @@ def create_opensearch_client():
     )
     logger.info("Клиент создан")
     return client
+
 
 def wait_for_es(client, timeout=120, interval=2):
     """

@@ -5,10 +5,10 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 
 logging.basicConfig(
-    filename='app.log',               # путь к файлу
+    filename='src.log',
     level=logging.INFO,
     format='%(asctime)s %(name)s %(levelname)s: %(message)s',
-    filemode='a',                     # 'a' — добавлять, 'w' — перезаписывать
+    filemode='a',
     encoding='utf-8'
 )
 logger = logging.getLogger(__name__)
@@ -64,6 +64,8 @@ def index_samples(client):
     """
     docs = [
         {"title": "Обзор OpenSearch", "content": "OpenSearch — открытый движок поиска.", "content_type": "article"},
+        {"title": "Python и OpenSearch", "content": "В python есть библиотека для работы с OpenSearch — opensearch-py",
+         "content_type": "article"},
         {"title": "Новости проекта", "content": "Вышел новый релиз OpenSearch.", "content_type": "news"},
         {"title": "Блог пост", "content": "Как настроить индекс в OpenSearch.", "content_type": "blog"}
     ]
